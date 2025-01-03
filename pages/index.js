@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      <h1>Mayra fedee</h1>
+      <h1>Mayra bora bill</h1>
       
     </div>
   );
