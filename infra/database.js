@@ -1,6 +1,8 @@
 import { Client } from "pg";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.example" });
 
-async function query(queryObject) {
+async function createClientWithRetry(retries = 0) {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: Number(process.env.POSTGRES_PORT),
@@ -8,12 +10,17 @@ async function query(queryObject) {
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
   });
+
   await client.connect();
-  const result = await client.query(queryObject);
-  await client.end();
-  return result;
+  console.log("✅ Conectado ao banco de dados!");
+  return client;
 }
 
 export default {
-  query: query,
+  query: async (queryText) => {
+    const client = await createClientWithRetry();
+    const result = await client.query(queryText);
+    await client.end();
+    return result;
+  },
 };
