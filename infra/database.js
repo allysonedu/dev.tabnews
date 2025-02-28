@@ -11,9 +11,14 @@ async function createClientWithRetry(retries = 0) {
     password: process.env.POSTGRES_PASSWORD,
   });
 
-  await client.connect();
-  console.log("✅ Conectado ao banco de dados!");
-  return client;
+  try {
+    await client.connect();
+    console.log("✅ Conectado ao banco de dados!");
+    return client;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }
 
 export default {
