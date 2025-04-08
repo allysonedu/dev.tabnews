@@ -13,13 +13,17 @@
     "build": "next build",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "start": "next start"
+    "start": "next start",
+    "migration:create": "node-pg-migrate -m infra/migrations create",
+    "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.example up",
+    "migration:down": "node-pg-migrate -m infra/migrations down"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.4.4",
     "next": "^13.1.6",
+    "node-pg-migrate": "^6.2.2",
     "pg": "^8.13.3",
     "pq": "^0.0.3",
     "react": "^18.2.0",
